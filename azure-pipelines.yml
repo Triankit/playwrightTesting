@@ -1,6 +1,14 @@
 trigger:
   - main
 
+schedules:
+  - cron: '30 23 * * *'
+    displayName: Monday Playwright Test
+    branches:
+      include:
+        - main
+    always: true
+
 pool:
   name: "OpenCart-Window-Pool"
 
