@@ -10,9 +10,10 @@
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
 		"@types/node": "^26.2.0",
-		"allure-playwright": "3.4.1"
+		"allure-playwright": "^3.4.1"
 	},
 	"dependencies": {
-		"dotenv": "^17.4.2"
+		"dotenv": "^17.4.2",
+		"nodemailer": "^9.0.5"
 	}
 }
