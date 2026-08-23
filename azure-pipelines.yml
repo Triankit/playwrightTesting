@@ -22,3 +22,12 @@ steps:
     env:
       CI: 'true'
       BASE_URL: 'http://localhost/opencart/upload/'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test-results/results.xml'
+      failTaskOnFailedTests: true
+      testRunTitle: 'Playwright Test'
+  
+  
