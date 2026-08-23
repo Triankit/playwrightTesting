@@ -1,4 +1,5 @@
 import { test, expect } from "../src/fixtures/pageObjectFixture";
+import { randomString } from "../src/utils/string";
 
 test.describe("Validate the working of Register Account functionality", () => {
 	test.beforeEach(async ({ page }) => {
@@ -19,7 +20,7 @@ test.describe("Validate the working of Register Account functionality", () => {
 			await registerModal.fillPersonalDetail(
 				"ank",
 				"tri",
-				"at@gamil.com",
+				`test_${randomString(5)}@gmail.com`,
 				"123456",
 			);
 			await registerModal.subscribeToNewsletter();
