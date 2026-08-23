@@ -30,6 +30,7 @@ export default defineConfig({
 				outputFile: "test-results/results.xml",
 			},
 		],
+		["allure-playwright", { resultsDir: "allure-results" }],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {

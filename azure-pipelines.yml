@@ -2,56 +2,44 @@ trigger:
   - main
 
 pool:
-  name: 'OpenCart-Mac-Pool'
+  name: "OpenCart-Mac-Pool"
 
 steps:
-
   - script: |
       node --version
       npm --version
-    displayName: 'Check Node.js and npm'
+    displayName: "Check Node.js and npm"
 
   - script: npm ci
-    displayName: 'Install dependencies'
+    displayName: "Install dependencies"
 
   - script: npx playwright install
-    displayName: 'Install Playwright browsers'
-
-  - script: npm install -g allure-commandline
-    displayName: 'Install Allure CLI'
+    displayName: "Install Playwright browsers"
 
   - script: npx playwright test
-    displayName: 'Run all Playwright tests'
+    displayName: "Run all Playwright tests"
     env:
-      CI: 'true'
-      BASE_URL: 'http://localhost/opencart/upload/'
-
-  - script: allure generate allure-results --clean -o allure-report
-    displayName: 'Generate Allure Report'
-    condition: succeededOrFailed()   
+      CI: "true"
+      BASE_URL: "http://localhost/opencart/upload/"
 
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: 'test-results/results.xml'
+      testResultsFormat: "JUnit"
+      testResultsFiles: "test-results/results.xml"
       failTaskOnFailedTests: true
-      testRunTitle: 'Playwright Test'
+      testRunTitle: "Playwright Test"
 
-  - task: PublishPipelineArtifact@1
+  - task: PublishAllureReport@2
+    displayName: "Generate and Publish Allure Report"
     condition: succeededOrFailed()
     inputs:
-      targetPath: 'playwright-report'
-      artifact: 'playwright-report'
-      publishLocation: 'pipeline'
+    testResultsDir: "allure-results"
+    reportName: "Playwright Allure Report"
 
   - task: PublishPipelineArtifact@1
+    displayName: "Publish Playwright HTML Report"
     inputs:
-      targetPath: 'allure-report'
-      artifact: 'allure-report'
-      publishLocation: 'pipeline'
-
- 
-
-
-  
+      targetPath: "playwright-report"
+      artifact: "playwright-report"
+      publishLocation: "pipeline"
