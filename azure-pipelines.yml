@@ -30,8 +30,9 @@ steps:
       testResultsFiles: 'test-results/results.xml'
       failTaskOnFailedTests: true
       testRunTitle: 'Playwright Test'
-  
+
   - task: PublishPipelineArtifact@1
+    condition: succeededOrFailed()
     inputs:
       targetPath: 'playwright-report'
       artifact: 'playwright-report'
