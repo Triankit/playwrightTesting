@@ -17,11 +17,18 @@ steps:
   - script: npx playwright install
     displayName: 'Install Playwright browsers'
 
+  - script: npm install -g allure-commandline
+    displayName: 'Install Allure CLI'
+
   - script: npx playwright test
     displayName: 'Run all Playwright tests'
     env:
       CI: 'true'
       BASE_URL: 'http://localhost/opencart/upload/'
+
+  - script: allure generate allure-results --clean -o allure-report
+    displayName: 'Generate Allure Report'
+    condition: succeededOrFailed()   
 
   - task: PublishTestResults@2
     condition: succeededOrFailed()
@@ -37,4 +44,8 @@ steps:
       targetPath: 'playwright-report'
       artifact: 'playwright-report'
       publishLocation: 'pipeline'
+
+ 
+
+
   
