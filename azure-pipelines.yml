@@ -45,6 +45,12 @@ steps:
       artifact: 'playwright-report'
       publishLocation: 'pipeline'
 
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'allure-report'
+      artifact: 'allure-report'
+      publishLocation: 'pipeline'
+
  
 
 
