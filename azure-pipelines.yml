@@ -34,8 +34,8 @@ steps:
     displayName: "Generate and Publish Allure Report"
     condition: succeededOrFailed()
     inputs:
-    testResultsDir: "allure-results"
-    reportName: "Playwright Allure Report"
+      testResultsDir: "allure-results"
+      reportName: "Playwright Allure Report"
 
   - task: PublishPipelineArtifact@1
     displayName: "Publish Playwright HTML Report"
