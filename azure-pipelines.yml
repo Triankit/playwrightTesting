@@ -1,19 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: 'OpenCart-Mac-Pool'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: |
+      node --version
+      npm --version
+    displayName: 'Check Node.js and npm'
+
+  - script: npm ci
+    displayName: 'Install dependencies'
+
+  - script: npx playwright install
+    displayName: 'Install Playwright browsers'
+
+  - script: npx playwright test
+    displayName: 'Run all Playwright tests'
+    env:
+      CI: 'true'
+      BASE_URL: 'http://localhost/opencart/upload/'
