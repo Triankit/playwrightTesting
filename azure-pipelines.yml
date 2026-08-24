@@ -51,3 +51,29 @@ steps:
       targetPath: "playwright-report"
       artifact: "playwright-report"
       publishLocation: "pipeline"
+
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish Playwright HTML Report"
+    inputs:
+      targetPath: "playwright-report"
+      artifact: "playwright-report"
+      publishLocation: "pipeline"
+  
+  - powershell: |
+      node scripts/send-report-email.js
+    displayName: "Send Playwright Report Email"
+    condition: succeededOrFailed()
+    env:
+      BREVO_SMTP_HOST: $(BREVO_SMTP_HOST)
+      BREVO_SMTP_PORT: $(BREVO_SMTP_PORT)
+      BREVO_SMTP_USER: $(BREVO_SMTP_USER)
+      BREVO_SMTP_KEY: $(BREVO_SMTP_KEY)
+      EMAIL_FROM: $(EMAIL_FROM)
+      EMAIL_TO: $(EMAIL_TO)
+
+      BUILD_STATUS: $(Agent.JobStatus)
+      BUILD_COLLECTION_URI: $(System.CollectionUri)
+      BUILD_PROJECT: $(System.TeamProject)
+      BUILD_ID: $(Build.BuildId)
+      BUILD_DEFINITION_NAME: $(Build.DefinitionName)
+      BUILD_NUMBER: $(Build.BuildNumber)
